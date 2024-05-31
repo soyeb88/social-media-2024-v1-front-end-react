@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
 import SignUpPageComponent from './components/SignUpPageComponent';
 import LogInPageComponent from './components/LogInPageComponent';
-import ProfilePageComponent from './components/ProfilePageComponent';
+import ProfilePageComponent from './components/Child/ProfilePageComponent';
 
 function App() {
   return (

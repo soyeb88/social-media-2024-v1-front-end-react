@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import { useNavigate, useParams } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.css';
 
 import AccountService from '../services/AccountService';
+import {encryption} from '../util/EncryptionHandler';
+
 
 class SignUpPageComponent extends Component {
 
@@ -12,7 +14,7 @@ class SignUpPageComponent extends Component {
         this.state = {
             name: '',
             userId: '',
-            password: ''
+            password: '',
         }
 
         this.createUser = this.createUser.bind(this);
@@ -23,11 +25,13 @@ class SignUpPageComponent extends Component {
 
     createUser = (event) =>{
         event.preventDefault();
-        let user = {name: this.state.name, userId: this.state.userId, password: this.state.password}
+        let user = {name: this.state.name, userId: this.state.userId, password: encryption(this.state.password)}
         console.log('user =>' + JSON.stringify(user))
 
         AccountService.createAccount(user).then(res =>{
-            this.props.navigate('/profile');
+            this.props.navigate('/profile', { state: {
+                userId: res.data.userId
+            }});
         });
     }
 
@@ -61,7 +65,7 @@ class SignUpPageComponent extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label>Password: </label>
-                                        <input value={this.state.password} onChange={this.changePasswordHandler}></input>
+                                        <input type="password" value={this.state.password} onChange={this.changePasswordHandler}></input>
                                     </div>
                                     <button className="btn btn-success" onClick={() => {
                                     }}>Create Your Account!!
