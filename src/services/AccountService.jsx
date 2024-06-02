@@ -15,6 +15,14 @@ class AccountService{
     getUserDetailstByUserId(userId){
         return axios.get(ACCOUNT_API_BASE_URL + '/' + userId);
     }
+
+    updatePasswordByUserId(password){
+        return axios.put(ACCOUNT_API_BASE_URL + '/update', password);
+    }
+
+    deleteAccountByUserId(userId){
+        return axios.delete(ACCOUNT_API_BASE_URL + '/' + userId);
+    }
 }
 
 export default new AccountService();

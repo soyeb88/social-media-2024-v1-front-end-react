@@ -30,6 +30,13 @@ class ProfilePageComponent extends Component {
                     this.props.navigate('/')
                 }}>LogOut
                 </button>
+                <button className="btn btn-danger" onClick={() => {
+                    //this.props.navigate('/facebook/setting')
+                    this.props.navigate('/facebook/setting', { state: {
+                        userId: this.state.userId
+                    }});
+                }}>Setting
+                </button>
 
                 <div>{this.state.userId}</div>
                 <h1>Wellcome to {this.state.name} my page</h1>
