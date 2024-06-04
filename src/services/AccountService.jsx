@@ -8,6 +8,14 @@ class AccountService{
         return axios.post(ACCOUNT_API_BASE_URL, user);
     }
 
+    createFacebookAccount(user){
+        return axios.post(ACCOUNT_API_BASE_URL + '/facebook', user);
+    }
+
+    getUserIdtByUserIdAndPassword(login){
+        return axios.post(ACCOUNT_API_BASE_URL + '/login', login);
+    }
+
     getUserIdtByUserIdAndPassword(login){
         return axios.post(ACCOUNT_API_BASE_URL + '/login', login);
     }

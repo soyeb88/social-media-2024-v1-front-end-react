@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import AccountService from '../../services/AccountService';

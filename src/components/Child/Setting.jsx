@@ -1,5 +1,3 @@
-import "../../css/style1.css";
-
 import { React, useState } from "react";
 import { useNavigate, useLocation}  from "react-router-dom";
 
