@@ -9,7 +9,7 @@ import LogoBody from '../css/fbbdy.png';
 
 function Facebook() {
     //let location = useLocation();
-    //let navigate = useNavigate();
+    let navigate = useNavigate();
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -24,6 +24,7 @@ function Facebook() {
     const [logInEmail, setLogInEmail] = useState("");
     const [logInPhone, setLogInPhone] = useState("");
     const [logInPassword, setLogInPassword] = useState("");
+    const [userId, setUserID] = useState("");
 
     //const [userId] = useState(location.state.userId);
 
@@ -38,6 +39,9 @@ function Facebook() {
         console.log(logIn)
         AccountService.logInFacebookAccount(logIn).then(res => {
             console.log(res.data)
+            navigate('/facebook/profile' ,  { state: {
+                userId: res.data.userId
+            }});
         });
     };
 
@@ -61,6 +65,9 @@ function Facebook() {
             phone: phone,password: encryption(password),gender: gender,month: month,day: day,year: year}
         AccountService.createFacebookAccount(userDetails).then(res => {
             console.log(res.data)
+            navigate('/facebook/profile' ,  { state: {
+                userId: res.data.userId
+            }});
         });
     };
 

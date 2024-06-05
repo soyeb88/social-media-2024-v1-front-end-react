@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import AccountService from '../../services/AccountService';
-class ProfilePageComponent extends Component {
+class FacebookProfilePageComponent extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            name: '',
+            firstName: '',
+            lastName: '',
             userId: this.props.location.state.userId
         }
         
@@ -15,9 +16,12 @@ class ProfilePageComponent extends Component {
 
     componentDidMount(){
         
-        AccountService.getUserDetailstByUserId(this.state.userId).then((res)=>{
-            this.setState({name: res.data.name})
-        });       
+        AccountService.facebookProfile(this.state.userId).then((res)=>{
+            this.setState({
+                firstName: res.data.firstName,
+                lastName: res.data.lastName
+            })
+        });    
     }
 
     render() {
@@ -31,14 +35,14 @@ class ProfilePageComponent extends Component {
                 </button>
                 <button className="btn btn-danger" onClick={() => {
                     //this.props.navigate('/facebook/setting')
-                    this.props.navigate('/facebook/setting', { state: {
-                        userId: this.state.userId
-                    }});
+                    //this.props.navigate('/facebook/setting', { state: {
+                      //  userId: this.state.userId
+                    //}});
                 }}>Setting
                 </button>
 
-                <p>{this.state.userId}</p>
-                <h1>Wellcome to {this.state.name} my page</h1>
+                <div>{this.state.userId}</div>
+                <h1>Wellcome to {this.state.firstName} {this.state.lastName} my page</h1>
             </div>
         );
     }
@@ -51,4 +55,4 @@ export const myParams = (WrappedComponent) => (props) => {
     return <WrappedComponent {...props} location={location} params={params} navigate={navigate} />;
 }
 
-export default myParams(ProfilePageComponent);
+export default myParams(FacebookProfilePageComponent);

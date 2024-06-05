@@ -24,6 +24,10 @@ class AccountService{
         return axios.get(ACCOUNT_API_BASE_URL + '/' + userId);
     }
 
+    facebookProfile(userId){
+        return axios.get(ACCOUNT_API_BASE_URL + '/facebook/profile/' + userId);
+    }
+
     updatePasswordByUserId(password){
         return axios.put(ACCOUNT_API_BASE_URL + '/update', password);
     }
