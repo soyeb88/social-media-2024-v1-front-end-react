@@ -34,10 +34,11 @@ function Facebook() {
             logInPassword
         );
 
-        //let password = { userId ,oldPassword: encryption(oldPassword), newPassword: encryption(newPassword)}
-        /*AccountService.updatePasswordByUserId(password).then(res => {
+        let logIn = { email: logInEmail,password: encryption(logInPassword)}
+        console.log(logIn)
+        AccountService.logInFacebookAccount(logIn).then(res => {
             console.log(res.data)
-        });*/
+        });
     };
 
 
