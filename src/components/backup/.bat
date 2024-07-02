@@ -1,0 +1,1 @@
+javaw -Xmx200m -jar C:\Users\soyeb\Documents\social-media-2024\social-media-2024-v1\target\social-media-2024-v1-0.0.1-SNAPSHOT.jar

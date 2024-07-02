@@ -1,15 +1,17 @@
 import axios from 'axios'
 
-const ACCOUNT_API_BASE_URL="http://localhost:8080/user";
+const ACCOUNT_API_BASE_URL="http://localhost:8083";
 
 class AccountService{
 
+    /*
     createAccount(user){
         return axios.post(ACCOUNT_API_BASE_URL, user);
     }
+    */
 
     createFacebookAccount(user){
-        return axios.post(ACCOUNT_API_BASE_URL + '/facebook', user);
+        return axios.post(ACCOUNT_API_BASE_URL + '/facebook/signup', user);
     }
 
     getUserIdtByUserIdAndPassword(login){
