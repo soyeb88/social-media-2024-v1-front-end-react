@@ -5,6 +5,7 @@ import Facebook from './components/Facebook';
 import ProfilePageComponent from './components/Child/ProfilePageComponent';
 import Setting from './components/Child/Setting';
 import FacebookProfilePageComponent from './components/Child/FacebookProfilePageComponent';
+import FacebookError from './components/UtilComponents/FacebookError';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/facebook/setting" element={<Setting/>}></Route>
             <Route path="/facebook/profile" element={<FacebookProfilePageComponent/>}></Route>
             <Route path="/" element={<Facebook/>}></Route>
+            <Route path="*" element={<FacebookError/>}/>
         </Routes>                         
       </Router>
     </div>

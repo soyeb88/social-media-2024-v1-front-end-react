@@ -6,6 +6,7 @@ import AccountService from '../services/AccountService';
 import { encryption } from '../util/EncryptionHandler';
 import '../css/style.css';
 import LogoBody from '../css/fbbdy.png';
+import Validation from "./UtilComponents/Validation";
 
 
 function FacebookSignUpComponent() {
@@ -22,6 +23,7 @@ function FacebookSignUpComponent() {
     const [day, setDay] = useState("");
     const [year, setYear] = useState("");
     const [dob, setDob] = useState("");
+    const [errors, setErrors] = useState({});
 
 
     const handleSignUpButton = (e) => {
@@ -40,15 +42,43 @@ function FacebookSignUpComponent() {
         );
 
         let userDetails = { firstName: firstName , lastName: lastName, email: email, 
-            phone: phone, password: encryption(password),gender: gender,dob: month+"-"+day+"-"+year}
-            console.log(userDetails)
-        AccountService.createFacebookAccount(userDetails).then(res => {
-            console.log(res.data)
-            navigate('/facebook/profile' ,  { state: {
-                userId: res.data.userId
-            }});
-        });
+            phone: phone, password: password,gender: gender,dob: month+"-"+day+"-"+year}
+        
+         console.log(userDetails);   
+     
+         if(isValidationPass(userDetails)){
+
+            userDetails.password = encryption(password);
+
+            console.log(userDetails);
+
+            AccountService.createFacebookAccount(userDetails).then(res => {
+                console.log(res.data)
+                navigate('/facebook/profile' ,  { state: {
+                    userId: res.data.userId
+                }});
+            }).catch(err =>{
+                console.log(err.message);
+                navigate('*')
+            });
+         }      
     };
+
+    const isValidationPass = (values) => { 
+        const newErrors = Validation(values)      
+        let isValid = true;    
+        console.log(Validation(values));
+        
+        if(newErrors.totalError>0){
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+
+        return isValid;
+    }
+    
+
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July","Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -100,14 +130,18 @@ function FacebookSignUpComponent() {
                                 value={lastName} onChange={(e) =>
                                     setLastName(e.target.value)
                                 }></input>
+                            {errors.firstName && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px'}}>{errors.firstName}</p>}
+                            {errors.lastName && <p className='lastnameError' style={{color:'red', margin: '-23px 33px 5px 226px', width:'182px'}}>{errors.lastName}</p>}
                             <input className='email' type='text' name='' placeholder='Mobile number or Email'
                                 value={email} onChange={(e) =>
                                     setEmail(e.target.value)
                                 }></input>
+                                {errors.email && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px'}}>{errors.email}</p>}
                             <input className='password' type='password' name='' placeholder='Password'
                                 value={password} onChange={(e) =>
                                     setPassword(e.target.value)
                                 }></input>
+                                {errors.password && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px'}}>{errors.password}</p>}
                             <input className='password2' type='password' name='' placeholder='Confirm password'
                                 value={confirmPassword} onChange={(e) =>
                                     setConfirmPassword(e.target.value)
