@@ -7,10 +7,12 @@ import { encryption } from '../util/EncryptionHandler';
 import '../css/style.css';
 import LogoBody from '../css/fbbdy.png';
 import Validation from "./UtilComponents/Validation";
-
+import DateUtil from "./UtilComponents/DateUtil";
+import DateFormatter from "./UtilComponents/DateFormatter";
 
 function FacebookSignUpComponent() {
     let navigate = useNavigate();
+
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -22,8 +24,9 @@ function FacebookSignUpComponent() {
     const [month, setMonth] = useState("");
     const [day, setDay] = useState("");
     const [year, setYear] = useState("");
-    const [dob, setDob] = useState("");
+    const [dob, setDob] = useState(null);
     const [errors, setErrors] = useState({});
+    const [dateUtil, seDateUtil] = useState(DateUtil);
 
 
     const handleSignUpButton = (e) => {
@@ -42,10 +45,11 @@ function FacebookSignUpComponent() {
         );
 
         let userDetails = { firstName: firstName , lastName: lastName, email: email, 
-            phone: phone, password: password,gender: gender,dob: month+"-"+day+"-"+year}
+            phone: phone, password: password,gender: gender,dob: DateFormatter(month, day, year, dateUtil.months)}
         
          console.log(userDetails);   
-     
+            
+         
          if(isValidationPass(userDetails)){
 
             userDetails.password = encryption(password);
@@ -61,7 +65,8 @@ function FacebookSignUpComponent() {
                 console.log(err.message);
                 navigate('*')
             });
-         }      
+         }  
+            
     };
 
     const isValidationPass = (values) => { 
@@ -77,35 +82,6 @@ function FacebookSignUpComponent() {
 
         return isValid;
     }
-    
-
-
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July","Aug", "Sep", "Oct", "Nov", "Dec"];
-
-    const mothsList = [];
-    months.forEach((months) => {
-        mothsList.push(<option>{months}</option>)
-    })
-
-    const days = [];
-    for(let i = 1; i<32; i++){
-        days.push(i);
-    }
-
-    const daysList = [];
-    days.forEach((days) => {
-        daysList.push(<option>{days}</option>)
-    })
-
-    const years = [];
-    for(let i = 1950; i<2005; i++){
-        years.push(i);
-    }
-
-    const yearList = [];
-    years.forEach((years) => {
-        yearList.push(<option>{years}</option>)
-    })
 
     return (
         <div>        
@@ -130,8 +106,10 @@ function FacebookSignUpComponent() {
                                 value={lastName} onChange={(e) =>
                                     setLastName(e.target.value)
                                 }></input>
-                            {errors.firstName && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px'}}>{errors.firstName}</p>}
-                            {errors.lastName && <p className='lastnameError' style={{color:'red', margin: '-23px 33px 5px 226px', width:'182px'}}>{errors.lastName}</p>}
+                                
+                            {errors.firstName && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px', float: 'left'}}>{errors.firstName}</p>}
+                            {errors.lastName && <p style={{color:'red', margin: '4px 176px 7px 12px', width:'182px', float: 'right'}}>{errors.lastName}</p>}
+                            
                             <input className='email' type='text' name='' placeholder='Mobile number or Email'
                                 value={email} onChange={(e) =>
                                     setEmail(e.target.value)
@@ -151,15 +129,15 @@ function FacebookSignUpComponent() {
                         <div className='birth_date'>
                             <select className='month' value={month} onChange={(e) => setMonth(e.target.value)}>
                                 <option>Month</option>
-                                {mothsList}
+                                {dateUtil.monthList}
                             </select>
                             <select className='day' value={day} onChange={(e) => setDay(e.target.value)}>
                                 <option>Day</option>
-                                {daysList}
+                                {dateUtil.daysList}
                             </select>
                             <select className='year' value={year} onChange={(e) => setYear(e.target.value)}>
                                 <option>Year</option>
-                                {yearList}
+                                {dateUtil.yearList}
                             </select>
                             <p className='brth_hint'><a href='#'>Why do i need to provide my date of birth?</a></p>
                         </div>

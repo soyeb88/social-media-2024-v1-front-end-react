@@ -108,7 +108,7 @@ function Setting() {
                     <button
                         type="submit"
                         value="Cancel"
-                        onClick={()=> navigate('/profile', { state: {
+                        onClick={()=> navigate('/facebook/profile', { state: {
                             userId: userId
                         }})}
                     >

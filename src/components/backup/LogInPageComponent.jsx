@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 
-import AccountService from '../services/AccountService';
-import {encryption} from '../util/EncryptionHandler';
+import AccountService from '../../services/AccountService';
+import {encryption} from '../../util/EncryptionHandler';
 
 class LogInPageComponent extends Component {
 

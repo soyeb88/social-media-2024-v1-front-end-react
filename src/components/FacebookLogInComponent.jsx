@@ -25,10 +25,14 @@ function FacebookLogInComponent() {
         let logIn = { email: logInEmail,password: encryption(logInPassword)}
         console.log(logIn)
         AccountService.logInFacebookAccount(logIn).then(res => {
-            console.log(res.data)
+            console.log(res.data.userId)
+            if(res.data.userId!=null){
             navigate('/facebook/profile' ,  { state: {
                 userId: res.data.userId
-            }});
+            }})
+            }else{
+                navigate('/')
+            };
         });
     };
 

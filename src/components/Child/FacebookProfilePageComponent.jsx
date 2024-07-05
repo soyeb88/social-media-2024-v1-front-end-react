@@ -34,10 +34,10 @@ class FacebookProfilePageComponent extends Component {
                 }}>LogOut
                 </button>
                 <button className="btn btn-danger" onClick={() => {
-                    //this.props.navigate('/facebook/setting')
-                    //this.props.navigate('/facebook/setting', { state: {
-                      //  userId: this.state.userId
-                    //}});
+                    this.props.navigate('/facebook/setting')
+                    this.props.navigate('/facebook/setting', { state: {
+                        userId: this.state.userId
+                    }});
                 }}>Setting
                 </button>
 
