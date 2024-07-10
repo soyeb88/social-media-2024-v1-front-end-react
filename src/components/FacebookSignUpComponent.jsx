@@ -16,7 +16,7 @@ function FacebookSignUpComponent() {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
+    const [emailOrPhone, setEmailOrPhone] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -34,8 +34,7 @@ function FacebookSignUpComponent() {
         console.log(
             firstName,
             lastName,
-            email,
-            phone,
+            emailOrPhone,
             password,
             confirmPassword,
             gender,
@@ -44,18 +43,43 @@ function FacebookSignUpComponent() {
             year
         );
 
-        let userDetails = { firstName: firstName , lastName: lastName, email: email, 
-            phone: phone, password: password,gender: gender,dob: DateFormatter(month, day, year, dateUtil.months)}
+        let userDetails = {firstName: null , lastName: null, email: "", 
+            phone: "", password: null,gender: null,dob: null};
+
+        
+        const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
+        const phone_pattern = /^(?=.*\d{5})[\d-]{1,20}$/;
+
+        if(email_pattern.test(emailOrPhone)){
+            userDetails.phone = emailOrPhone;
+        }else if(email_pattern.test(emailOrPhone)){
+            userDetails.email = emailOrPhone;
+        }
+        else{
+            userDetails.email = emailOrPhone;
+        }
+
+        console.log(userDetails);
+
+        //userDetails = { firstName: firstName , lastName: lastName, email: email, 
+          //  phone: phone, password: password,gender: gender,dob: DateFormatter(month, day, year, dateUtil.months)}
+
+        userDetails.firstName = firstName;
+        userDetails.lastName = lastName;
+        userDetails.password = password;
+        userDetails.gender = gender;
+        userDetails.dob = DateFormatter(month, day, year, dateUtil.months);
         
          console.log(userDetails);   
             
          
-         if(isValidationPass(userDetails)){
+         if(isValidationPass(userDetails, confirmPassword)){
 
             userDetails.password = encryption(password);
 
             console.log(userDetails);
 
+            /*
             AccountService.createFacebookAccount(userDetails).then(res => {
                 console.log(res.data)
                 navigate('/facebook/profile' ,  { state: {
@@ -65,14 +89,18 @@ function FacebookSignUpComponent() {
                 console.log(err.message);
                 navigate('*')
             });
-         }  
+            */
+            
+         }
+             
             
     };
 
-    const isValidationPass = (values) => { 
-        const newErrors = Validation(values)      
+    
+    const isValidationPass = (values, confirmPassword) => { 
+        const newErrors = Validation(values,confirmPassword)      
         let isValid = true;    
-        console.log(Validation(values));
+        console.log(Validation(values,confirmPassword));
         
         if(newErrors.totalError>0){
             isValid = false;
@@ -82,6 +110,7 @@ function FacebookSignUpComponent() {
 
         return isValid;
     }
+    
 
     return (
         <div>        
@@ -111,10 +140,10 @@ function FacebookSignUpComponent() {
                             {errors.lastName && <p style={{color:'red', margin: '4px 176px 7px 12px', width:'182px', float: 'right'}}>{errors.lastName}</p>}
                             
                             <input className='email' type='text' name='' placeholder='Mobile number or Email'
-                                value={email} onChange={(e) =>
-                                    setEmail(e.target.value)
+                                value={emailOrPhone} onChange={(e) =>
+                                    setEmailOrPhone(e.target.value)
                                 }></input>
-                                {errors.email && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px'}}>{errors.email}</p>}
+                                {errors.emailOrPhone && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'244px'}}>{errors.emailOrPhone}</p>}
                             <input className='password' type='password' name='' placeholder='Password'
                                 value={password} onChange={(e) =>
                                     setPassword(e.target.value)
@@ -124,6 +153,7 @@ function FacebookSignUpComponent() {
                                 value={confirmPassword} onChange={(e) =>
                                     setConfirmPassword(e.target.value)
                                 }></input>
+                                 {errors.confirmPassword && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'400px'}}>{errors.confirmPassword}</p>}
                         </div>
                         <p className='birthday'>Birthday</p>
                         <div className='birth_date'>
