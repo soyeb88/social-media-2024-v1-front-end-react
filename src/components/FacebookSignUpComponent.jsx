@@ -9,6 +9,7 @@ import LogoBody from '../css/fbbdy.png';
 import Validation from "./UtilComponents/Validation";
 import DateUtil from "./UtilComponents/DateUtil";
 import DateFormatter from "./UtilComponents/DateFormatter";
+import { PatternUtil } from "./UtilComponents/PatternUtil";
 
 function FacebookSignUpComponent() {
     let navigate = useNavigate();
@@ -43,66 +44,78 @@ function FacebookSignUpComponent() {
             year
         );
 
-        let userDetails = {firstName: null , lastName: null, email: "", 
-            phone: "", password: null,gender: null,dob: null};
+        let userDetails = {
+            firstName: null, lastName: null, email: "",
+            phone: "", password: null, gender: null, dob: null
+        };
 
-        
-        const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
-        const phone_pattern = /^(?=.*\d{5})[\d-]{1,20}$/;
-
-        if(email_pattern.test(emailOrPhone)){
+        if (PatternUtil.phone_pattern.test(emailOrPhone)) {
             userDetails.phone = emailOrPhone;
-        }else if(email_pattern.test(emailOrPhone)){
+            userDetails.email = null;
+        } else if (PatternUtil.email_pattern.test(emailOrPhone)) {
             userDetails.email = emailOrPhone;
+            userDetails.phone = null;
         }
-        else{
+        else {
             userDetails.email = emailOrPhone;
         }
 
         console.log(userDetails);
-
-        //userDetails = { firstName: firstName , lastName: lastName, email: email, 
-          //  phone: phone, password: password,gender: gender,dob: DateFormatter(month, day, year, dateUtil.months)}
-
+        
         userDetails.firstName = firstName;
         userDetails.lastName = lastName;
         userDetails.password = password;
         userDetails.gender = gender;
         userDetails.dob = DateFormatter(month, day, year, dateUtil.months);
-        
-         console.log(userDetails);   
-            
-         
-         if(isValidationPass(userDetails, confirmPassword)){
+
+        console.log(userDetails);
+
+
+        if (isValidationPass(userDetails, confirmPassword)) {
 
             userDetails.password = encryption(password);
 
             console.log(userDetails);
 
-            /*
+
             AccountService.createFacebookAccount(userDetails).then(res => {
-                console.log(res.data)
-                navigate('/facebook/profile' ,  { state: {
-                    userId: res.data.userId
-                }});
-            }).catch(err =>{
-                console.log(err.message);
-                navigate('*')
+                console.log(res.data);
+                navigate('/facebook/profile', {
+                    state: {
+                        userId: res.data.userId
+                    }
+                });
+
+            }).catch(err => {
+                if (err.response) {
+                    console.log(err.response);
+                    if(err.response.status ===409){
+                        userDetails.status = 409;
+                        setErrors(Validation(userDetails, encryption(confirmPassword)));
+                        navigate('/');
+                    }
+                    if(err.response.status ===500){
+                        navigate('*');
+                    }
+                }
+                else{            
+                    navigate('*');
+                }
+
+
             });
-            */
-            
-         }
-             
-            
+        }
+
+
     };
 
-    
-    const isValidationPass = (values, confirmPassword) => { 
-        const newErrors = Validation(values,confirmPassword)      
-        let isValid = true;    
-        console.log(Validation(values,confirmPassword));
-        
-        if(newErrors.totalError>0){
+
+    const isValidationPass = (values, confirmPassword) => {
+        const newErrors = Validation(values, confirmPassword)
+        let isValid = true;
+        console.log(Validation(values, confirmPassword));
+
+        if (newErrors.totalError > 0) {
             isValid = false;
         }
 
@@ -110,10 +123,10 @@ function FacebookSignUpComponent() {
 
         return isValid;
     }
-    
+
 
     return (
-        <div>        
+        <div>
             <section>
                 <div className='logo_body'>
                     <img src={LogoBody}></img>
@@ -135,25 +148,25 @@ function FacebookSignUpComponent() {
                                 value={lastName} onChange={(e) =>
                                     setLastName(e.target.value)
                                 }></input>
-                                
-                            {errors.firstName && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px', float: 'left'}}>{errors.firstName}</p>}
-                            {errors.lastName && <p style={{color:'red', margin: '4px 176px 7px 12px', width:'182px', float: 'right'}}>{errors.lastName}</p>}
-                            
+
+                            {errors.firstName && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '182px', float: 'left' }}>{errors.firstName}</p>}
+                            {errors.lastName && <p style={{ color: 'red', margin: '4px 176px 7px 12px', width: '182px', float: 'right' }}>{errors.lastName}</p>}
+
                             <input className='email' type='text' name='' placeholder='Mobile number or Email'
                                 value={emailOrPhone} onChange={(e) =>
                                     setEmailOrPhone(e.target.value)
                                 }></input>
-                                {errors.emailOrPhone && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'244px'}}>{errors.emailOrPhone}</p>}
+                            {errors.emailOrPhone && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '244px' }}>{errors.emailOrPhone}</p>}
                             <input className='password' type='password' name='' placeholder='Password'
                                 value={password} onChange={(e) =>
                                     setPassword(e.target.value)
                                 }></input>
-                                {errors.password && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'182px'}}>{errors.password}</p>}
+                            {errors.password && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '182px' }}>{errors.password}</p>}
                             <input className='password2' type='password' name='' placeholder='Confirm password'
                                 value={confirmPassword} onChange={(e) =>
                                     setConfirmPassword(e.target.value)
                                 }></input>
-                                 {errors.confirmPassword && <p style={{color:'red', margin: '3px 5px 5px 4px', width:'400px'}}>{errors.confirmPassword}</p>}
+                            {errors.confirmPassword && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '400px' }}>{errors.confirmPassword}</p>}
                         </div>
                         <p className='birthday'>Birthday</p>
                         <div className='birth_date'>
@@ -170,16 +183,19 @@ function FacebookSignUpComponent() {
                                 {dateUtil.yearList}
                             </select>
                             <p className='brth_hint'><a href='#'>Why do i need to provide my date of birth?</a></p>
+                            {errors.dob && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '400px' }}>{errors.dob}</p>}
                         </div>
-                        
+
+
                         <div>
-                            <input type='radio' name="gender" value="m"  id="male" 
-                              style= {{height: '14px', margin: '41px 1px 12px 32px', width:'24px'}} onChange={(e) => setGender(e.target.value)} />
+                            <input type='radio' name="gender" value="m" id="male"
+                                style={{ height: '14px', margin: '41px 1px 12px 32px', width: '24px' }} onChange={(e) => setGender(e.target.value)} />
                             <label htmlFor="male">Male</label>
                             <input type='radio' name="gender" value="f" id="female"
-                             style= {{height: '14px', margin: '1px 1px 1px 20px', width:'24px'}} onChange={(e) => setGender(e.target.value)} />
+                                style={{ height: '14px', margin: '1px 1px 1px 20px', width: '24px' }} onChange={(e) => setGender(e.target.value)} />
                             <label htmlFor="female">Female</label>
                         </div>
+                        {errors.gender && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '400px' }}>{errors.gender}</p>}
 
 
                         <p className='agreement'>By clicking Sign Up, you agree to our <a href='#'>Terms, Data Policy and Cookies Policy.</a>You may receive SMS Notifications from us and can opt out any time.</p>

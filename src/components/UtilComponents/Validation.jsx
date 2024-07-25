@@ -1,15 +1,17 @@
+import {PatternUtil} from './PatternUtil.jsx';
+
 function Validation(values, confirmPassword) {
     
     const errors = {}
     
     errors.totalError = 0;
-
-    const email_pattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,6}$/;
-    const phone_pattern = /^(?=.*\d{5})[\d-]{1,20}$/;
-    //const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
-
+    
     if(values.firstName === ""){
         errors.firstName = "First Name is Required";
+        errors.totalError++;
+    }
+    else if(!PatternUtil.first_last_name.test(values.firstName)){
+        errors.firstName = "First Name is not correct format";
         errors.totalError++;
     }
 
@@ -17,14 +19,23 @@ function Validation(values, confirmPassword) {
         errors.lastName = "Last Name is Required";
         errors.totalError++;
     }
+    else if(!PatternUtil.first_last_name.test(values.lastName)){
+        errors.lastName = "Last Name is not correct format";
+        errors.totalError++;
+    }
+
 
     if(values.email === "" && values.phone === ""){
         errors.emailOrPhone = "Email or Phone is Required";
         errors.totalError++;
     }
-    else if(!email_pattern.test(values.email) && !phone_pattern.test(values.phone)){
+    else if(!PatternUtil.email_pattern.test(values.email) && !PatternUtil.phone_pattern.test(values.phone)){
         errors.emailOrPhone = "Email or Phone is not correct";
         errors.totalError++;
+    }
+    else if(values.status === 409){
+        console.log("worked");
+        errors.emailOrPhone = "Email or Phone is already existed! Please Log In";
     }
 
     if(values.password === ""){
@@ -42,7 +53,20 @@ function Validation(values, confirmPassword) {
         errors.totalError++;
     }
     else if(confirmPassword !== values.password){
-        errors.confirmPassword = "Confirm Password is not match with password";
+        console.log("worked please")
+        console.log(confirmPassword);
+        console.log(values.password);
+        errors.confirmPassword = "Password is not match";
+        errors.totalError++;
+    }
+
+    if(values.dob === false){
+        errors.dob = "Date of Birth is Required";
+        errors.totalError++;
+    }
+
+    if(values.gender === ""){
+        errors.gender = "Gender is Required";
         errors.totalError++;
     }
 
