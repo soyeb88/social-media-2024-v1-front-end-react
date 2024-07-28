@@ -22,8 +22,8 @@ function Setting() {
             userId
         );
 
-        let password = { userId ,oldPassword: encryption(oldPassword), newPassword: encryption(newPassword)}
-        AccountService.updatePasswordByUserId(password).then(res => {
+        let password = { userId ,oldPassword: oldPassword, newPassword: newPassword}
+        AccountService.updateFacebookPasswordByUserId(password).then(res => {
             console.log(res.data)
         });
     };
@@ -42,8 +42,9 @@ function Setting() {
         console.log(
             userId
         );
-        AccountService.deleteAccountByUserId(userId).then(res => {
-            console.log(res.data)
+        AccountService.deleteFacebookAccountByUserId(userId).then(res => {
+            console.log(res.data);
+            navigate('/');
         });
     };
 

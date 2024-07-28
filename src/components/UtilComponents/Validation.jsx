@@ -37,6 +37,10 @@ function Validation(values, confirmPassword) {
         console.log("worked");
         errors.emailOrPhone = "Email or Phone is already existed! Please Log In";
     }
+    else if(values.status === 404){
+        console.log("worked");
+        errors.emailOrPhone = "Email or Phone is not found! Please Sign Up!";
+    }
 
     if(values.password === ""){
         errors.password = "Password is Required";
