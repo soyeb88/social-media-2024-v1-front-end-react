@@ -27,16 +27,16 @@ function FacebookLogInComponent() {
 
         let logIn = { email: "",phone: "", password: null};
 
-        if(PatternUtil.phone_pattern.test(logInEmailOrPhone)){
-            logIn.phone = logInEmailOrPhone;
+        if(PatternUtil.phone_pattern.test(logInEmailOrPhone.trim())){
+            logIn.phone = logInEmailOrPhone.trim();
             logIn.email = null;
         }
-        else if(PatternUtil.email_pattern.test(logInEmailOrPhone)){
-            logIn.email = logInEmailOrPhone;
+        else if(PatternUtil.email_pattern.test(logInEmailOrPhone.trim())){
+            logIn.email = logInEmailOrPhone.trim();
             logIn.phone = null;
         }
         else{
-            logIn.email = logInEmailOrPhone;
+            logIn.email = logInEmailOrPhone.trim();
         }
 
         console.log(logIn);
@@ -45,7 +45,7 @@ function FacebookLogInComponent() {
 
         if (isValidationPass(logIn, logInPassword)) {
 
-            logIn.password = logInPassword;
+            logIn.password = encryption(logInPassword);
 
             console.log(logIn);
 
@@ -57,11 +57,17 @@ function FacebookLogInComponent() {
                     }})
                 }
 
-            }).catch(err => {             
+            }).catch(err => {    
+                logIn.password = logInPassword;         
                 if (err.response) {
                     console.log(err.response);
                     if(err.response.status ===404){
                         logIn.status = 404;
+                        setErrors(Validation(logIn, logInPassword));
+                        navigate('/');
+                    }
+                    if(err.response.status ===401){
+                        logIn.status = 401;
                         setErrors(Validation(logIn, logInPassword));
                         navigate('/');
                     }

@@ -49,21 +49,23 @@ function FacebookSignUpComponent() {
             phone: "", password: null, gender: null, dob: null
         };
 
-        if (PatternUtil.phone_pattern.test(emailOrPhone)) {
-            userDetails.phone = emailOrPhone;
+       
+
+        if (PatternUtil.phone_pattern.test(emailOrPhone.trim())) {
+            userDetails.phone = emailOrPhone.trim();
             userDetails.email = null;
-        } else if (PatternUtil.email_pattern.test(emailOrPhone)) {
-            userDetails.email = emailOrPhone;
+        } else if (PatternUtil.email_pattern.test(emailOrPhone.trim())) {
+            userDetails.email = emailOrPhone.trim();
             userDetails.phone = null;
         }
         else {
-            userDetails.email = emailOrPhone;
+            userDetails.email = emailOrPhone.trim();
         }
 
         console.log(userDetails);
         
-        userDetails.firstName = firstName;
-        userDetails.lastName = lastName;
+        userDetails.firstName = firstName.trim();
+        userDetails.lastName = lastName.trim();
         userDetails.password = password;
         userDetails.gender = gender;
         userDetails.dob = DateFormatter(month, day, year, dateUtil.months);
