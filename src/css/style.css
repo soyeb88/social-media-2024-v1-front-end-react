@@ -1,9 +1,3 @@
-/*
-  If you have any queries about this form you can comment::
-  Please Subscribe our channel for more related videos::
-  Thank you for watching video :)
-*/
-
 *{
     margin: 0;
     padding: 0;
@@ -149,9 +143,8 @@ section{
     text-decoration: underline;
 }
 .signup_body .signup_form input[type="radio"]{
-    height: 15px;
-    margin-left: -50px;
-    margin-top: 30px;
+    height: 14px;
+    margin: 38px -76px 7px -49px;
 }
 
 .signup_body .signup_form .font{
@@ -183,3 +176,29 @@ section{
 .signup_body .signup_form .signup:hover{
     background: linear-gradient(#74b85e, #598B45);
 }
+
+.login_error{
+    color: red; 
+    font-size: 11px;
+}
+
+.sign_up_error_first_name{
+    color: red;
+    margin: 3px 5px 5px 4px;
+    width: 182px;
+    float: left; 
+}
+
+.sign_up_error_last_name{
+    color: red;
+    margin: 4px 176px 7px 12px; 
+    width: 182px; 
+    float: right;
+}
+
+.sign_up_error{
+    color: red;
+    margin: 3px 5px 5px 4px; 
+    width: '244px';
+}
+

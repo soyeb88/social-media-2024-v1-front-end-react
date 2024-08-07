@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import AccountService from '../services/AccountService';
 import { encryption } from '../util/EncryptionHandler';
-import '../css/style.css';
 import LogoBody from '../css/fbbdy.png';
 import Validation from "./UtilComponents/Validation";
 import DateUtil from "./UtilComponents/DateUtil";
@@ -151,24 +150,24 @@ function FacebookSignUpComponent() {
                                     setLastName(e.target.value)
                                 }></input>
 
-                            {errors.firstName && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '182px', float: 'left' }}>{errors.firstName}</p>}
-                            {errors.lastName && <p style={{ color: 'red', margin: '4px 176px 7px 12px', width: '182px', float: 'right' }}>{errors.lastName}</p>}
+                            {errors.firstName && <p className='sign_up_error_first_name'>{errors.firstName}</p>}
+                            {errors.lastName && <p className='sign_up_error_last_name'>{errors.lastName}</p>}
 
                             <input className='email' type='text' name='' placeholder='Mobile number or Email'
                                 value={emailOrPhone} onChange={(e) =>
                                     setEmailOrPhone(e.target.value)
                                 }></input>
-                            {errors.emailOrPhone && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '244px' }}>{errors.emailOrPhone}</p>}
+                            {errors.emailOrPhone && <p className='sign_up_error'>{errors.emailOrPhone}</p>}
                             <input className='password' type='password' name='' placeholder='Password'
                                 value={password} onChange={(e) =>
                                     setPassword(e.target.value)
                                 }></input>
-                            {errors.password && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '182px' }}>{errors.password}</p>}
+                            {errors.password && <p className='sign_up_error'>{errors.password}</p>}
                             <input className='password2' type='password' name='' placeholder='Confirm password'
                                 value={confirmPassword} onChange={(e) =>
                                     setConfirmPassword(e.target.value)
                                 }></input>
-                            {errors.confirmPassword && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '400px' }}>{errors.confirmPassword}</p>}
+                            {errors.confirmPassword && <p className='sign_up_error'>{errors.confirmPassword}</p>}
                         </div>
                         <p className='birthday'>Birthday</p>
                         <div className='birth_date'>
@@ -185,19 +184,19 @@ function FacebookSignUpComponent() {
                                 {dateUtil.yearList}
                             </select>
                             <p className='brth_hint'><a href='#'>Why do i need to provide my date of birth?</a></p>
-                            {errors.dob && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '400px' }}>{errors.dob}</p>}
+                            {errors.dob && <p className='sign_up_error'>{errors.dob}</p>}
                         </div>
 
 
                         <div>
                             <input type='radio' name="gender" value="m" id="male"
-                                style={{ height: '14px', margin: '41px 1px 12px 32px', width: '24px' }} onChange={(e) => setGender(e.target.value)} />
+                                onChange={(e) => setGender(e.target.value)} />
                             <label htmlFor="male">Male</label>
                             <input type='radio' name="gender" value="f" id="female"
-                                style={{ height: '14px', margin: '1px 1px 1px 20px', width: '24px' }} onChange={(e) => setGender(e.target.value)} />
+                                 onChange={(e) => setGender(e.target.value)} />
                             <label htmlFor="female">Female</label>
                         </div>
-                        {errors.gender && <p style={{ color: 'red', margin: '3px 5px 5px 4px', width: '400px' }}>{errors.gender}</p>}
+                        {errors.gender && <p className='sign_up_error'>{errors.gender}</p>}
 
 
                         <p className='agreement'>By clicking Sign Up, you agree to our <a href='#'>Terms, Data Policy and Cookies Policy.</a>You may receive SMS Notifications from us and can opt out any time.</p>
