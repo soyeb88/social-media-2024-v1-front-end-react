@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 
 import AccountService from '../services/AccountService';
@@ -99,7 +99,7 @@ function FacebookLogInComponent() {
         <div>
             
             <nav className='navbar'>
-                <img className='logo' src={Logo}></img>
+                <img className='logo' src={Logo} alt="No Image"></img>
                 <form className='login_form'>
                     <div className='email'>
                         <div className='font'>Email or Phone</div>

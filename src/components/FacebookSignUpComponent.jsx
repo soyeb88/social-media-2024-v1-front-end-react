@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 
 import AccountService from '../services/AccountService';
@@ -17,16 +17,14 @@ function FacebookSignUpComponent() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [emailOrPhone, setEmailOrPhone] = useState("");
-    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [gender, setGender] = useState("");
     const [month, setMonth] = useState("");
     const [day, setDay] = useState("");
     const [year, setYear] = useState("");
-    const [dob, setDob] = useState(null);
     const [errors, setErrors] = useState({});
-    const [dateUtil, seDateUtil] = useState(DateUtil);
+    const [dateUtil] = useState(DateUtil);
 
 
     const handleSignUpButton = (e) => {
@@ -130,7 +128,7 @@ function FacebookSignUpComponent() {
         <div>
             <section>
                 <div className='logo_body'>
-                    <img src={LogoBody}></img>
+                    <img src={LogoBody} alt="No Image available"></img>
                     <p className='like_font font1'>Thanks for stopping by!</p>
                     <p className='like_font'>We hope to see you again soon.</p>
                 </div>
