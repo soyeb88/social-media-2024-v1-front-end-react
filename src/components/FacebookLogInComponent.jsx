@@ -99,7 +99,7 @@ function FacebookLogInComponent() {
         <div>
             
             <nav className='navbar'>
-                <img className='logo' src={Logo} alt="No Image"></img>
+                <img className='logo' src={Logo} alt="Not abailable"></img>
                 <form className='login_form'>
                     <div className='email'>
                         <div className='font'>Email or Phone</div>
