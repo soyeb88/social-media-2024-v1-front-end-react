@@ -1,8 +1,9 @@
+import React from 'react';
 import axios from 'axios'
 
 const ACCOUNT_API_BASE_URL="http://localhost:8083";
 
-class AccountService{
+class AccountService extends React.Component{
 
     createFacebookAccount(user){
         return axios.post(ACCOUNT_API_BASE_URL + '/facebook/signup', user);
