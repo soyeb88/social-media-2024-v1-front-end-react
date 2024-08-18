@@ -128,7 +128,7 @@ function FacebookSignUpComponent() {
         <div>
             <section>
                 <div className='logo_body'>
-                    <img src={LogoBody} alt="No Image available"></img>
+                    <img src={LogoBody} alt="No resource available"></img>
                     <p className='like_font font1'>Thanks for stopping by!</p>
                     <p className='like_font'>We hope to see you again soon.</p>
                 </div>
