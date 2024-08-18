@@ -181,7 +181,7 @@ function FacebookSignUpComponent() {
                                 <option>Year</option>
                                 {dateUtil.yearList}
                             </select>
-                            <p className='brth_hint'><a href='#'>Why do i need to provide my date of birth?</a></p>
+                            <p className='brth_hint'><a href='/facebook/term-conditionsn'>Why do i need to provide my date of birth?</a></p>
                             {errors.dob && <p className='sign_up_error'>{errors.dob}</p>}
                         </div>
 
@@ -197,7 +197,7 @@ function FacebookSignUpComponent() {
                         {errors.gender && <p className='sign_up_error'>{errors.gender}</p>}
 
 
-                        <p className='agreement'>By clicking Sign Up, you agree to our <a href='#'>Terms, Data Policy and Cookies Policy.</a>You may receive SMS Notifications from us and can opt out any time.</p>
+                        <p className='agreement'>By clicking Sign Up, you agree to our <a href='/facebook/term-conditions'>Terms, Data Policy and Cookies Policy.</a>You may receive SMS Notifications from us and can opt out any time.</p>
                         <button className='signup' onClick={(e) => handleSignUpButton(e)}>Sign Up</button>
                     </form>
                 </div>

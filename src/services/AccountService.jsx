@@ -25,4 +25,4 @@ class AccountService{
     }
 }
 
-export default new AccountService();
+export default AccountService;

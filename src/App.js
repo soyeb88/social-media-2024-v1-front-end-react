@@ -1,11 +1,9 @@
 import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
-//import SignUpPageComponent from './components/SignUpPageComponent';
-//import LogInPageComponent from './components/LogInPageComponent';
 import Facebook from './components/Facebook';
-//import ProfilePageComponent from './components/Child/ProfilePageComponent';
 import Setting from './components/Child/Setting';
 import FacebookProfilePageComponent from './components/Child/FacebookProfilePageComponent';
 import FacebookError from './components/UtilComponents/FacebookError';
+import TermsAndConditions from './components/TermsAndConditions';
 
 function App() {
   return (
@@ -14,9 +12,7 @@ function App() {
       
       <Router>
         <Routes>
-           {/* <Route path="signup" element={<SignUpPageComponent/>}></Route>
-            <Route path="/LogIn" element={<LogInPageComponent/>}></Route> */}
-           { /*<Route path="/profile" element={<ProfilePageComponent/>}></Route> */}
+            <Route path="/facebook/term-conditions" element={<TermsAndConditions/>}></Route>
             <Route path="/facebook/setting" element={<Setting/>}></Route>
             <Route path="/facebook/profile" element={<FacebookProfilePageComponent/>}></Route>
             <Route path="/" element={<Facebook/>}></Route>
