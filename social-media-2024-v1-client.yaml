@@ -16,7 +16,7 @@ spec:
       containers:
         - name: social-media-2024-v1-app-client
           image: soyeb88/social-media-2024-v1-frontend:latest
-          imagePullPolicy: Never
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
 ---
