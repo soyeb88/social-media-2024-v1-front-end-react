@@ -9,7 +9,29 @@ pipeline{
                 git branch: 'ahmed-v1', url: 'https://github.com/soyeb88/social-media-2024-v1-front-end-react.git'
                 bat 'npm install'
                 bat 'npm run build'
-                bat 'xcopy /Y C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\socialmedia-devops-automation-nodejs-frontend\\build C:\\Users\\soyeb\\Documents\\social-media-2024\\Host\\nginx-1.27.0\\nginx-1.27.0\\html /s /e'
+                //bat 'xcopy /Y C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\socialmedia-devops-automation-nodejs-frontend\\build C:\\Users\\soyeb\\Documents\\social-media-2024\\Host\\nginx-1.27.0\\nginx-1.27.0\\html /s /e'
+            }
+        }
+        stage('Build Docker Image'){
+            steps{
+                bat 'docker build -t soyeb88/social-media-2024-v1-frontend:latest .'
+            }
+        }
+        stage('Push Docker Hub'){
+            steps{
+                script{
+                    bat 'docker login -u soyeb88 -p Dhaka_866'
+                    bat 'docker push soyeb88/social-media-2024-v1-frontend:latest'
+                }
+            }
+        }
+        stage('Deploy to K8s'){
+            steps{
+                script{
+                	withKubeConfig(credentialsId: 'jenkins-secret', namespace: 'jenkins', restrictKubeConfigAccess: false, serverUrl: 'https://127.0.0.1:50955') {
+    					bat 'kubectl apply -f social-media-2024-v1-client.yaml'
+					}
+                }
             }
         }
     }
