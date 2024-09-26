@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const ACCOUNT_API_BASE_URL="http://localhost:8084";
+const ACCOUNT_API_BASE_URL="http://localhost:8086";
+//const ACCOUNT_API_BASE_URL="http://social-media-2024-v1-app-api-service:8086";
 
 class AccountService {
 
