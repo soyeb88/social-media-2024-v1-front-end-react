@@ -3,6 +3,10 @@ pipeline{
     tools{
         nodejs 'nodejs'
     }
+     environment {
+        KUBECONFIG = 'C:\\Users\\soyeb\\.kube\\config'
+        MINIKUBE_HOME = 'C:\\Users\\soyeb\\.minikube'
+    }
     stages{
         stage('Build React App'){
             steps{
@@ -15,6 +19,7 @@ pipeline{
         stage('Build Docker Image'){
             steps{
                 bat 'docker build -t soyeb88/social-media-2024-v1-frontend:latest .'
+                 bat 'docker system prune -f'
             }
         }
         stage('Push Docker Hub'){
@@ -28,9 +33,13 @@ pipeline{
         stage('Deploy to K8s'){
             steps{
                 script{
-                	withKubeConfig(credentialsId: 'k8s2', namespace: 'jenkins', restrictKubeConfigAccess: false) {
-    					bat 'kubectl apply -f social-media-2024-v1-client.yaml'
-					}
+                	withEnv(["--kubeconfig=${KUBECONFIG}"]) {
+                        // Run your container in Minikube
+                        bat 'kubectl config set-context --current --namespace=jenkins'
+                        bat 'kubectl delete pods -l app=app-client'
+                        bat 'kubectl apply -f social-media-2024-v1-client.yaml'
+                        //bat 'minikube image load soyeb88/social-media-2024-v1-frontend:latest'
+                    }
                 }
             }
         }
